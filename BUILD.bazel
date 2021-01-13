@@ -1,0 +1,57 @@
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary", "npm_package_bin")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load(":my_rule.bzl", "my_rule")
+
+my_rule(
+    name = "rule",
+    output = "output.txt",
+)
+
+npm_package_bin(
+    name = "bin",
+    tool = ":binary",
+    outs = ["bin_output.txt"],
+)
+
+nodejs_binary(
+    name = "binary",
+    entry_point = ":foo.ts",
+    data = [":foo"],
+    link_workspace_root = True,
+)
+
+ts_project(
+    name = "foo",
+    srcs = ["foo.ts"],
+    tsconfig = "//:tsconfig.json",
+    declaration = True,
+    link_workspace_root = True,
+    deps = [
+        ":bar",
+        ":baz",
+    ],
+)
+
+ts_project(
+    name = "bar",
+    srcs = ["bar.ts"],
+    tsconfig = "//:tsconfig.json",
+    declaration = True,
+    link_workspace_root = True,
+)
+
+ts_project(
+    name = "baz",
+    srcs = ["baz.ts"],
+    tsconfig = "//:tsconfig.json",
+    declaration = True,
+    link_workspace_root = True,
+)
+
+ts_project(
+    name = "ts_project",
+    srcs = ["ts_project.ts"],
+    tsconfig = "//:tsconfig.json",
+    declaration = True,
+    link_workspace_root = True,
+)
