@@ -16,7 +16,7 @@ my_rule = rule(
         "_binary": attr.label(
             default = "//:binary",
             executable = True,
-            cfg = "exec",
+            cfg = "host",
         ),
     },
 )

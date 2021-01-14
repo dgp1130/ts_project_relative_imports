@@ -2,6 +2,8 @@ load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary", "npm_package_bin"
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load(":my_rule.bzl", "my_rule")
 
+exports_files(["tsconfig.json"], visibility = ["//visibility:public"])
+
 my_rule(
     name = "rule",
     output = "output.txt",
@@ -29,6 +31,7 @@ ts_project(
     deps = [
         ":bar",
         ":baz",
+        "//dir:file",
     ],
 )
 
